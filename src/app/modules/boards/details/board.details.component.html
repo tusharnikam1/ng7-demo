@@ -1,0 +1,9 @@
+<h3 >{{board.name}} Lists</h3>
+
+<ul *ngIf="lists.length; else noList">
+    <li *ngFor="let list of lists">
+       {{list.name}}
+    </li> 
+</ul>
+
+<ng-template #noList>No list found!!</ng-template>

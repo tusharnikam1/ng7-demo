@@ -1,0 +1,6 @@
+<div [ngClass]="alertClasses" role="alert" *ngIf="alert.message && alert.message!== ''">
+    {{alert.message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeAlert($event)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>

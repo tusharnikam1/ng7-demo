@@ -1,0 +1,11 @@
+<div>
+    <h2> User List </h2>
+    <!-- <a routerLink="/users/add" class="btn btn-primary btn-sm">Add User</a> -->
+    <br/>
+    <ul *ngIf="users.length; else noUser">
+        <li *ngFor="let user of users">
+            {{user.first_name}} <button class="btn btn-sm btn-danger" (click)="delete(user.id)">Delete </button>
+        </li> 
+    </ul>
+    <ng-template #noUser><h3>No user found</h3></ng-template>
+</div>
