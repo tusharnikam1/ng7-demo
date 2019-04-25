@@ -9,7 +9,8 @@ describe('User Service', () => {
     let service: UserService;
     let httpMock: HttpTestingController;
     const newUser: User = {first_name : 'john', last_name: 'doe', email: 'john@demo.com', password: 'demo'};
-    const loggedInUser = {...newUser, id: 'daWQSWS7653BHGRDssOIU' }
+    const userId = 'daWQSWS7653BHGRDssOIU' ;
+    const loggedInUser = {...newUser, id: userId};
 
 
     beforeEach(() => {
@@ -42,6 +43,23 @@ describe('User Service', () => {
         const req = httpMock.expectOne(`${environment.api_url}users/login`);
         expect(req.request.method).toBe('POST');
         req.flush(loggedInUser);
+    });
+
+
+    it('should set loggedin user', () => {
+        service.setUser(loggedInUser);
+        expect(service.loggedInUser).toEqual(loggedInUser);
+    });
+
+    it('should fetch loggedin user token id', () => {
+        const token = service.getUserToken();
+        expect(token).toEqual(userId);
+    });
+
+    it('should logout user and clear localstorge key', () => {
+        service.logout();
+        expect(service.loggedInUser).toBeFalsy();
+        expect(localStorage.getItem('loggedInUser')).toBeNull();
     });
 
     afterEach(() => {
