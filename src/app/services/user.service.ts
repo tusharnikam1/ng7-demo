@@ -7,23 +7,12 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  users: User[] = [{
-    id: 1,
-    first_name: 'demo',
-    last_name: 'demo',
-    email: 'demo@example.com',
-    password: 'demo'
-  }];
   loggedInUser: any = localStorage.getItem('loggedInUser') || null;
   redirectUrl: string;
 
   private defaultRoute  = '/users';
 
   constructor(private http: HttpClient, private router: Router) { }
-
-  getRandomId(max: number = 5000) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
 
   addUser(user: User) {
     return this.http.post(`${environment.api_url}users`, user);
@@ -33,15 +22,9 @@ export class UserService {
     return this.http.post(`${environment.api_url}users/login`, data);
   }
 
-  delete(id: number): User[] {
-    this.users = this.users.filter((user) => {
-      return user.id !== id;
-    });
-    return this.users;
-  }
-
   logout() {
     this.loggedInUser = false;
+    localStorage.removeItem('loggedInUser');
   }
 
   loginRedirect(route: string = this.defaultRoute) {
@@ -58,7 +41,7 @@ export class UserService {
     localStorage.setItem('loggedInUser', JSON.stringify(user));
   }
 
-  getUserToken(){
+  getUserToken() {
     const loggedInUser =  JSON.parse(localStorage.getItem('loggedInUser'));
     return loggedInUser.id;
   }

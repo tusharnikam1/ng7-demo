@@ -12,7 +12,7 @@ export class ListService {
     }
 
     get(id: string) {
-        return this.http.get(`${environment.api_url}boards/${id}`);
+        return this.http.get(`${environment.api_url}lists/${id}`);
     }
 
 }
